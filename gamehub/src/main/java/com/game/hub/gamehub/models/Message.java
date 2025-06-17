@@ -20,7 +20,7 @@ public class Message {
 	private UUID id;
 
 	@Column(name = "sender_id", updatable = false, nullable = false)
-	private Long senderId;
+	private UUID senderId;
 
 	@Column(name = "message_content", updatable = true, nullable = false)
 	private String content;
@@ -29,8 +29,8 @@ public class Message {
 	private LocalDateTime timestamp;
 
 	@Column(name = "match_id", updatable = false, nullable = false)
-	private Long matchId;
+	private UUID matchId;
 
 	@Column(name = "tournament_id", updatable = false, nullable = false)
-	private Long tournamentId;
+	private UUID tournamentId;
 }
