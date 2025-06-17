@@ -42,6 +42,8 @@ public class User {
 	@Column(name = "role", nullable = false)
 	private UserRole role;
 
+	@Enumerated(EnumType.STRING)
+	@JdbcType(PostgreSQLEnumJdbcType.class)
 	@Column(name = "rank", nullable = false)
 	private String rank;
 
