@@ -5,7 +5,7 @@ import java.util.UUID;
 import org.hibernate.annotations.JdbcType;
 import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
-import com.game.hub.gamehub.enums.Result;
+import com.game.hub.gamehub.enums.MatchResult;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,12 +26,12 @@ public class Match {
 	private UUID id;
 
 	@Column(name = "tournament_id", updatable = false, nullable = false)
-	private Long tournamentId;
+	private UUID tournamentId;
 
 	@Enumerated(EnumType.STRING)
 	@JdbcType(PostgreSQLEnumJdbcType.class)
 	@Column(name = "result", nullable = false)
-	private Result result;
+	private MatchResult result;
 
 	@Column(name = "round", updatable = true, nullable = false)
 	private Integer round;

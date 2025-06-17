@@ -7,7 +7,7 @@ import java.util.UUID;
 import org.hibernate.annotations.JdbcType;
 import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
-import com.game.hub.gamehub.enums.Status;
+import com.game.hub.gamehub.enums.TournamentStatus;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,7 +36,7 @@ public class Tournament {
 	@Enumerated(EnumType.STRING)
 	@JdbcType(PostgreSQLEnumJdbcType.class)
 	@Column(name = "status", nullable = false)
-	private Status status;
+	private TournamentStatus status;
 
 	@OneToMany
 	private List<User> players = new ArrayList<>();

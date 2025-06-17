@@ -5,7 +5,7 @@ import java.util.UUID;
 import org.hibernate.annotations.JdbcType;
 import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
-import com.game.hub.gamehub.enums.Role;
+import com.game.hub.gamehub.enums.UserRole;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,7 +26,7 @@ public class User {
 	private UUID id;
 
 	@NotNull
-	@Column(name = "role", nullable = false)
+	@Column(name = "username", nullable = false)
 	private String username;
 
 	@NotNull
@@ -34,13 +34,13 @@ public class User {
 	private String email;
 
 	@NotNull
-	@Column(name = "role", nullable = false)
+	@Column(name = "password", nullable = false)
 	private String password;
 
 	@Enumerated(EnumType.STRING)
 	@JdbcType(PostgreSQLEnumJdbcType.class)
 	@Column(name = "role", nullable = false)
-	private Role role;
+	private UserRole role;
 
 	@Column(name = "rank", nullable = false)
 	private String rank;
