@@ -1,5 +1,6 @@
 package com.game.hub.gamehub.models;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -37,7 +38,16 @@ public class Tournament {
 	@JdbcType(PostgreSQLEnumJdbcType.class)
 	@Column(name = "status", nullable = false)
 	private TournamentStatus status;
-
+	
+	@Column(name = "current_round", nullable = false)
+	private Integer currentRound;
+	
+	@Column(name = "total_rounds", nullable = false)
+	private Integer totalRounds;
+	
+	@Column(name = "created_date", updatable = false, nullable = false)
+	private LocalDateTime timestamp;
+	
 	@OneToMany
 	private List<User> players = new ArrayList<>();
 
