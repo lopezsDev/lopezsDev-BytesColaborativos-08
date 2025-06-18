@@ -1,10 +1,12 @@
 package com.game.hub.gamehub.models;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 import org.hibernate.annotations.JdbcType;
 import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
+import com.game.hub.gamehub.enums.UserRank;
 import com.game.hub.gamehub.enums.UserRole;
 
 import jakarta.persistence.Column;
@@ -19,7 +21,7 @@ import lombok.Data;
 
 @Entity
 @Data
-public class User {
+public class User implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
 	@Column(columnDefinition = "uuid", updatable = false, nullable = false)
@@ -45,7 +47,7 @@ public class User {
 	@Enumerated(EnumType.STRING)
 	@JdbcType(PostgreSQLEnumJdbcType.class)
 	@Column(name = "rank", nullable = false)
-	private String rank;
+	private UserRank rank;
 
 	@Column(name = "points", nullable = false)
 	private int points;
