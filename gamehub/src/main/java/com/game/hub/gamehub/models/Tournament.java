@@ -1,86 +1,54 @@
 package com.game.hub.gamehub.models;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import com.game.hub.gamehub.enums.Status;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
-import jakarta.annotation.Nonnull;
+import com.game.hub.gamehub.enums.TournamentStatus;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import lombok.Data;
 
 @Entity
+@Data
 public class Tournament {
-  @Id
-  @GeneratedValue(strategy = GenerationType.UUID)
-  private UUID id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.UUID)
+	@Column(columnDefinition = "uuid", updatable = false, nullable = false)
+	private UUID id;
 
-  @Nonnull
-  @Column(nullable=false)
-  private String name;
+	@Column(name = "name", nullable = false)
+	private String name;
 
-  private int maxPlayers;
+	@Column(name = "max_players", nullable = false)
+	private int maxPlayers;
 
-  private Status status;
-
-  @OneToMany
-  private List<User> players = new ArrayList<>();
-
-  protected Tournament() {}
-
-  public Tournament(String name, int maxPlayers, Status status, List<User> players) {
-    this.name = name;
-    this.maxPlayers = maxPlayers;
-    this.status = status;
-    this.players = players;
-  }
-
-  @Override
-  public String toString() {
-    return String.format(
-        "Tournament[id=%s, name='%s', maxPlayers='%d', status='%s']",
-        id, name, maxPlayers, status);
-  }
-
-  public UUID getId() {
-    return id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public int getMaxPlayers() {
-    return maxPlayers;
-  }
-
-  public void setMaxPlayers(int maxPlayers) {
-    this.maxPlayers = maxPlayers;
-  }
-
-  public Status getStatus() {
-    return status;
-  }
-
-  public void setStatus(Status status) {
-    this.status = status;
-  }
-
-  public List<User> getPlayers() {
-    return players;
-  }
-
-  public void setPlayers(List<User> players) {
-    this.players = players;
-  }
+	@Enumerated(EnumType.STRING)
+	@JdbcType(PostgreSQLEnumJdbcType.class)
+	@Column(name = "status", nullable = false)
+	private TournamentStatus status;
+	
+	@Column(name = "current_round", nullable = false)
+	private Integer currentRound;
+	
+	@Column(name = "total_rounds", nullable = false)
+	private Integer totalRounds;
+	
+	@Column(name = "created_date", updatable = false, nullable = false)
+	private LocalDateTime timestamp;
+	
+	@OneToMany
+	private List<User> players = new ArrayList<>();
 
 }
