@@ -5,7 +5,6 @@ import com.game.hub.gamehub.dtos.LoginResponse;
 import com.game.hub.gamehub.dtos.RegisterRequest;
 import com.game.hub.gamehub.dtos.RegisterResponse;
 import com.game.hub.gamehub.services.AuthService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
