@@ -1,5 +1,7 @@
 package com.game.hub.gamehub.controllers;
 
+import com.game.hub.gamehub.dtos.LoginRequest;
+import com.game.hub.gamehub.dtos.LoginResponse;
 import com.game.hub.gamehub.dtos.RegisterRequest;
 import com.game.hub.gamehub.dtos.RegisterResponse;
 import com.game.hub.gamehub.services.AuthService;
@@ -23,6 +25,12 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<RegisterResponse> register(@RequestBody RegisterRequest request) {
         RegisterResponse response = authService.register(request);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+        LoginResponse response = authService.login(request);
         return ResponseEntity.ok(response);
     }
 }
