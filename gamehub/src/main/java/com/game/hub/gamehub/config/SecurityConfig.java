@@ -25,7 +25,8 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable()) // Solo para pruebas, no recomendado en producción
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/api/user/**").hasRole("USER")
+                .requestMatchers("/api/user/**").hasRole("PLAYER")
+                .requestMatchers("/api/tournaments/**").hasRole("ADMIN")
                 .anyRequest().authenticated());
         return http.build();
     }
