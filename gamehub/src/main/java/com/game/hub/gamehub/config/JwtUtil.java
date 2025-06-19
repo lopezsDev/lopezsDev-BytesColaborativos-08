@@ -51,6 +51,7 @@ public class JwtUtil {
         }
     }
 
+    // extract the payload subject content
     public String extractUsername(String token){
         return Jwts.parser().verifyWith(key).build().parseSignedClaims(token).getPayload().getSubject();
     }
