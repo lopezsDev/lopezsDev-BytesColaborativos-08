@@ -1,5 +1,6 @@
 package com.game.hub.gamehub.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -9,6 +10,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -20,6 +22,9 @@ public class SecurityConfig {
         return  new BCryptPasswordEncoder();
     }
 
+    @Autowired
+    private JwtAuthenticationFilter authFilter;
+
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -30,6 +35,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/tournaments/**").hasRole("ADMIN")
                 .anyRequest().authenticated())
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        http.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class); // here put first validate token from jwt before UsernamePasswordAuthenticationFilter from security
         return http.build();
     }
 }
