@@ -33,8 +33,8 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable()) // Solo para pruebas, no recomendado en producción
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/api/user/**").hasAnyRole("PLAYER","ADMIN")
-                .requestMatchers("/api/tournaments/**").hasRole("ADMIN")
+                // .requestMatchers("/api/user/**").hasAnyRole("PLAYER","ADMIN")
+                // .requestMatchers("/api/tournaments/**").hasRole("ADMIN")
                 .anyRequest().authenticated())
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.addFilterBefore(JwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class); // here put first validate token from jwt before UsernamePasswordAuthenticationFilter from security
