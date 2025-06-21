@@ -1,60 +1,66 @@
 package com.game.hub.gamehub.config;
 
-import java.io.IOException;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
-import org.springframework.web.filter.OncePerRequestFilter;
 
+import io.jsonwebtoken.io.IOException;
 import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Component
-public class JwtAuthenticationFilter extends OncePerRequestFilter{
+public class JwtAuthenticationFilter  extends UsernamePasswordAuthenticationFilter {
 
-    private final JwtUtil jwtutil;
-    private  final UserDetailsService userDetailsService;
+    private  final JwtUtil jwtUtil;
 
-    public JwtAuthenticationFilter(JwtUtil jwtutil,UserDetailsService userDetailsService){
-        this.jwtutil = jwtutil;
-        this.userDetailsService = userDetailsService;
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtUtil jwtUtil) {
+        this.jwtUtil = jwtUtil;
+
+        setFilterProcessesUrl("/api/auth/login");
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException{
+    @Autowired
+    public void setAuthenticationManager(AuthenticationManager authenticationManager) {
+        super.setAuthenticationManager(authenticationManager);
+    }
 
-        String requestHeader = request.getHeader("Authorization");
-        String username;
-        String token;
+    @Override
+    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
+        try{
+            String username = obtainUsername(request);
+            String password = obtainPassword(request);
 
-        if(requestHeader != null && requestHeader.startsWith("Bearer")){
-            token = requestHeader.substring(7);
-            try {
-                username = jwtutil.extractUsername(token);
-                if(username != null && SecurityContextHolder.getContext().getAuthentication() == null){
-                    var userDetails = userDetailsService.loadUserByUsername(username);
-                    Boolean validToken = jwtutil.validateToken(token);
-
-                    if(validToken){
-                        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-
-                        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
-                        SecurityContextHolder.getContext().setAuthentication(authentication);
-                    }
-
-                }
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
+            return this.getAuthenticationManager().authenticate(authenticationToken);
+        } catch (Exception e) {
+            //System.out.println(e.getMessage());
+            throw new RuntimeException("Error de Autentificación", e.getCause());
         }
+    }
 
-        filterChain.doFilter(request, response);
+    @Override
+    protected void successfulAuthentication(
+        HttpServletRequest request,
+        HttpServletResponse response,
+        FilterChain chain,
+        Authentication authResult)
+        throws IOException {
+
+        try {
+            // Get the authenticated user
+            User user = (User) authResult.getPrincipal();
+            // Generate JWT token
+            String token = jwtUtil.generateToken(user.getUsername());
+            response.addHeader("Authorization", "Bearer " + token);
+        } catch (IOException e) {
+            throw new RuntimeException("Error al procesar la autenticación", e);
+        }
+        //response.addHeader("Access-Control-Expose-Headers", "Authorization");
     }
 }

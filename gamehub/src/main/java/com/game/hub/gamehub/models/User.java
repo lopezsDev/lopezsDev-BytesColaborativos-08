@@ -23,7 +23,7 @@ import lombok.Data;
 @Data
 public class User implements Serializable{
 	@Id
-	@GeneratedValue(strategy = GenerationType.UUID)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(columnDefinition = "uuid", updatable = false, nullable = false)
 	private UUID id;
 
@@ -46,10 +46,10 @@ public class User implements Serializable{
 
 	@Enumerated(EnumType.STRING)
 	@JdbcType(PostgreSQLEnumJdbcType.class)
-	@Column(name = "rank", nullable = false)
+	@Column(name = "rank", nullable = false, columnDefinition = "user_rank default 'BRONZE'")
 	private UserRank rank;
 
-	@Column(name = "points", nullable = false)
+	@Column(name = "points", nullable = false, columnDefinition = "integer default 0")
 	private int points;
 
 }

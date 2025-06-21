@@ -1,4 +1,4 @@
-package com.game.hub.gamehub.services;
+package com.game.hub.gamehub.services.User;
 
 import com.game.hub.gamehub.dtos.LoginRequest;
 import com.game.hub.gamehub.dtos.LoginResponse;

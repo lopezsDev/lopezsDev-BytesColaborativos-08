@@ -1,10 +1,11 @@
-package com.game.hub.gamehub.services;
+package com.game.hub.gamehub.services.User;
+
+import org.springframework.stereotype.Service;
 
 import com.game.hub.gamehub.dtos.LoginRequest;
 import com.game.hub.gamehub.dtos.LoginResponse;
 import com.game.hub.gamehub.dtos.RegisterRequest;
 import com.game.hub.gamehub.dtos.RegisterResponse;
-import org.springframework.stereotype.Service;
 
 @Service
 public class AuthServiceImpl implements AuthService {

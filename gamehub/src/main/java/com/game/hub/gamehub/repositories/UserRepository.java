@@ -10,4 +10,5 @@ import com.game.hub.gamehub.models.User;
 public interface UserRepository extends CrudRepository<User, UUID> {
     List<User> findByEmail(String email);
     User findFirstByEmail(String email);
+    User findByUsername(String username);
 }
