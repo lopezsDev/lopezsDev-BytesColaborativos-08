@@ -1,4 +1,4 @@
-package com.game.hub.gamehub.services.User.impl;
+package com.game.hub.gamehub.services;
 
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
