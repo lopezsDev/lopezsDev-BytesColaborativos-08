@@ -18,9 +18,9 @@ import jakarta.servlet.http.HttpServletResponse;
 public class JwtAuthorizationFilter extends OncePerRequestFilter{
 
     private final JwtUtil jwtutil;
-    private  final UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
 
-    public JwtAuthorizationFilter(JwtUtil jwtutil,UserDetailsService userDetailsService){
+    public JwtAuthorizationFilter(JwtUtil jwtutil, UserDetailsService userDetailsService){
         this.jwtutil = jwtutil;
         this.userDetailsService = userDetailsService;
     }

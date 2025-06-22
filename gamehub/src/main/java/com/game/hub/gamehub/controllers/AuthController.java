@@ -10,7 +10,7 @@ import com.game.hub.gamehub.dtos.LoginRequest;
 import com.game.hub.gamehub.dtos.LoginResponse;
 import com.game.hub.gamehub.dtos.RegisterRequest;
 import com.game.hub.gamehub.dtos.RegisterResponse;
-import com.game.hub.gamehub.services.User.AuthService;
+import com.game.hub.gamehub.services.AuthService;
 
 @RestController
 @RequestMapping("/api/auth")
