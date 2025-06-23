@@ -1,5 +1,6 @@
 package com.game.hub.gamehub.models;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 import jakarta.persistence.Column;
@@ -9,9 +10,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
 
-@Entity
+@Entity(name = "User_Stats")
 @Data
-public class UserStats {
+public class UserStats implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
@@ -20,7 +21,7 @@ public class UserStats {
 
 	@Column(name = "user_id", updatable = false, nullable = false)
 	private UUID userId;
-	
+
 	@Column(name = "tournament_id", updatable = false, nullable = false)
 	private UUID tournament_id;
 

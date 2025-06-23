@@ -1,5 +1,6 @@
 package com.game.hub.gamehub.models;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 import org.hibernate.annotations.JdbcType;
@@ -16,9 +17,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
 
-@Entity
+@Entity(name = "Matches")
 @Data
-public class Match {
+public class Match implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
@@ -30,7 +31,7 @@ public class Match {
 
 	@Enumerated(EnumType.STRING)
 	@JdbcType(PostgreSQLEnumJdbcType.class)
-	@Column(name = "result", nullable = false)
+	@Column(name = "match_result", nullable = false)
 	private MatchResult result;
 
 	@Column(name = "round", updatable = true, nullable = false)

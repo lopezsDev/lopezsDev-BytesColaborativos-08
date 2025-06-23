@@ -19,9 +19,9 @@ import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
-@Entity
+@Entity(name = "Users")
 @Data
-public class User implements Serializable{
+public class User implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(columnDefinition = "uuid", updatable = false, nullable = false)
@@ -41,15 +41,15 @@ public class User implements Serializable{
 
 	@Enumerated(EnumType.STRING)
 	@JdbcType(PostgreSQLEnumJdbcType.class)
-	@Column(name = "role", nullable = false)
+	@Column(name = "user_role")
 	private UserRole role;
 
 	@Enumerated(EnumType.STRING)
 	@JdbcType(PostgreSQLEnumJdbcType.class)
-	@Column(name = "rank", nullable = false, columnDefinition = "user_rank default 'BRONZE'")
+	@Column(name = "user_rank")
 	private UserRank rank;
 
-	@Column(name = "points", nullable = false, columnDefinition = "integer default 0")
+	@Column(name = "points")
 	private int points;
 
 }

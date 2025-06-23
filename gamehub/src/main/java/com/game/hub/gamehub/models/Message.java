@@ -1,5 +1,6 @@
 package com.game.hub.gamehub.models;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -10,9 +11,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
 
-@Entity
+@Entity(name = "Messages")
 @Data
-public class Message {
+public class Message implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
@@ -25,7 +26,7 @@ public class Message {
 	@Column(name = "message_content", updatable = true, nullable = false)
 	private String content;
 
-	@Column(name = "timestamp", updatable = false, nullable = false)
+	@Column(name = "message_timestamp", updatable = false, nullable = false)
 	private LocalDateTime timestamp;
 
 	@Column(name = "match_id", updatable = false, nullable = false)

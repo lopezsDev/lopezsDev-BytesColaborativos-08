@@ -1,5 +1,6 @@
 package com.game.hub.gamehub.models;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,9 +21,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import lombok.Data;
 
-@Entity
+@Entity(name = "Tournaments")
 @Data
-public class Tournament {
+public class Tournament implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
 	@Column(columnDefinition = "uuid", updatable = false, nullable = false)
@@ -38,16 +39,16 @@ public class Tournament {
 	@JdbcType(PostgreSQLEnumJdbcType.class)
 	@Column(name = "status", nullable = false)
 	private TournamentStatus status;
-	
+
 	@Column(name = "current_round", nullable = false)
 	private Integer currentRound;
-	
+
 	@Column(name = "total_rounds", nullable = false)
 	private Integer totalRounds;
-	
+
 	@Column(name = "created_date", updatable = false, nullable = false)
 	private LocalDateTime timestamp;
-	
+
 	@OneToMany
 	private List<User> players = new ArrayList<>();
 
